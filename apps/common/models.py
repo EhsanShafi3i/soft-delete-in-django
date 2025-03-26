@@ -91,7 +91,7 @@ class SoftDeleteModel(models.Model):
                 related_name = related.get_accessor_name()
                 related_manager = getattr(self, related_name, None)
                 if related_manager and hasattr(related_manager, "deleted_only"):
-                    related_queryset = related_manager.all()
+                    related_queryset = related_manager.deleted_only()
                     related_model = related_queryset.model
                     if issubclass(related_model, SoftDeleteModel):
                         related_manager.all().update(is_deleted=False, deleted_at=None)
